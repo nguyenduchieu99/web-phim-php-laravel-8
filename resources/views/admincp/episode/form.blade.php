@@ -36,12 +36,22 @@
                                 'placeholder' => 'Nhập vào dữ liệu.....',
                             ]) !!}
                         </div>
-
+{{-- 
                         <div class="form-group">
                             {!! Form::label('episode', 'Tập phim', []) !!}
                             <select name="episode" class="form-control" id="episode">
                      
                             </select>
+                        </div> --}}
+
+                        <div class="form-group">
+                            {!! Form::label('episode', 'Tập phim', []) !!}
+                            {!! Form::text('episode', isset($episode) ? $episode->episode : '', [
+                                'class' => 'form-control',
+                                'placeholder' => '...........',
+                                isset($episode) ? 'readonly' : ''
+                                // 'readonly'
+                            ]) !!}
                         </div>
 
                         @if (!isset($episode))

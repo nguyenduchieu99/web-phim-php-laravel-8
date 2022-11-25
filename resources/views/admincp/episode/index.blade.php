@@ -10,6 +10,7 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Tên phim</th>
+                            <th scope="col">Ảnh</th>
                             <th scope="col">Tập phim</th>
                             <th scope="col">Link phim</th>
                             <th scope="col">Quản lý</th>
@@ -20,6 +21,7 @@
                             <tr>
                                 <th scope="row">{{$key}}</th>
                                 <td >{{$epi->movie->title}}</td>
+                                <td><img width="100" src="{{asset('uploads/movie/'.$epi->movie->image)}}" ></td>
                                 <td >{{$epi->episode}}</td>
                                 <td >{!! $epi->link_phim !!}</td>
                                 <td>
