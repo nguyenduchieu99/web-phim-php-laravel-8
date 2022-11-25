@@ -21,17 +21,17 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $list = Movie::with('category', 'country', 'movie_genre','genre')->orderBy('id', 'DESC')->get();
+        $list = Movie::with('category', 'country', 'movie_genre', 'genre')->orderBy('id', 'DESC')->get();
         //with('category) là tên hàm lấy ở bên movie
         // return response()->json($list);
 
-        $path = public_path()."/json/";
+        $path = public_path() . "/json/";
 
-        if(!is_dir($path)){
-            mkdir($path,0777,true);
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
         }
 
-        File::put($path.'movies.json',json_encode($list));
+        File::put($path . 'movies.json', json_encode($list));
         return view('admincp.movie.index', compact('list'));
     }
 
@@ -71,12 +71,11 @@ class MovieController extends Controller
                 $text = 'SD';
             } elseif ($mov->resolution == 2) {
                 $text = 'HD Cam';
-            }elseif ($mov->resolution == 3) {
+            } elseif ($mov->resolution == 3) {
                 $text = 'Cam';
             } elseif ($mov->resolution == 4) {
                 $text = 'Full HD';
-            }
-             else {
+            } else {
                 $text = 'Trailer';
             }
 
@@ -103,7 +102,7 @@ class MovieController extends Controller
     public function filter_default(Request $request)
     {
         $data = $request->all();
-        $movie = Movie::where('topview',0)->orderBy('ngaycapnhap', 'DESC')->take(10)->get();
+        $movie = Movie::where('topview', 0)->orderBy('ngaycapnhap', 'DESC')->take(10)->get();
         $output = '';
         foreach ($movie as $key => $mov) {
             if ($mov->resolution == 0) {
@@ -112,12 +111,11 @@ class MovieController extends Controller
                 $text = 'SD';
             } elseif ($mov->resolution == 2) {
                 $text = 'HD Cam';
-            }elseif ($mov->resolution == 3) {
+            } elseif ($mov->resolution == 3) {
                 $text = 'Cam';
             } elseif ($mov->resolution == 4) {
                 $text = 'Full HD';
-            }
-             else {
+            } else {
                 $text = 'Trailer';
             }
 
@@ -156,7 +154,7 @@ class MovieController extends Controller
         $list_genre = Genre::all();
         $list = Movie::with('category', 'country', 'genre')->orderBy('id', 'DESC')->get();
         //with('category) là tên hàm lấy ở bên movie
-        return view('admincp.movie.form', compact('category_movie', 'genre_movie','list_genre','country_movie'));
+        return view('admincp.movie.form', compact('category_movie', 'genre_movie', 'list_genre', 'country_movie'));
     }
     /**
      * Store a newly created resource in storage.
@@ -206,7 +204,7 @@ class MovieController extends Controller
         $movie->save();
         //thêm nhiều thể loại cho phim
         $movie->movie_genre()->attach($data['genre']);
-        
+
         return redirect()->route('movie.index');
     }
 
@@ -236,7 +234,7 @@ class MovieController extends Controller
         $list_genre = Genre::all();
         $movie_genre = $movie->movie_genre;
 
-        return view('admincp.movie.form', compact('category_movie','genre_movie','country_movie','list_genre','movie','movie_genre'));
+        return view('admincp.movie.form', compact('category_movie', 'genre_movie', 'country_movie', 'list_genre', 'movie', 'movie_genre'));
     }
 
     /**
@@ -252,7 +250,7 @@ class MovieController extends Controller
         $movie = Movie::find($id);
         $movie->title = $data['title'];
         $movie->tags = $data['tags'];
-         $movie->trailer = $data['trailer'];
+        $movie->trailer = $data['trailer'];
         $movie->slug = $data['slug'];
         $movie->thoiluong = $data['thoiluong'];
         $movie->name_eng = $data['name_eng'];
@@ -291,7 +289,7 @@ class MovieController extends Controller
         }
         $movie->save();
         $movie->movie_genre()->sync($data['genre']);
-        
+
         return redirect()->route('movie.index');
     }
 
@@ -309,10 +307,10 @@ class MovieController extends Controller
             unlink('uploads/movie/' . $movie->image);
         }
         //xóa thể loại
-        Movie_Genre::whereIn('movie_id',[$movie->id])->delete();
+        Movie_Genre::whereIn('movie_id', [$movie->id])->delete();
 
         //xóa tập phim
-        Episode::whereIn('movie_id',[$movie->id])->delete();
+        Episode::whereIn('movie_id', [$movie->id])->delete();
 
         $movie->delete();
 
