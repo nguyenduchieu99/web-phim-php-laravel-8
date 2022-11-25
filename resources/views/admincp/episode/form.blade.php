@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <a href="{{ route('movie.index') }}" class="btn btn-primary">Liệt kê danh sách tập phim</a>
+                    <a href="{{ route('episode.index') }}" class="btn btn-primary">Liệt kê danh sách tập phim</a>
                     <div class="card-header">Quản lý tập phim</div>
 
                     <div class="card-body">
@@ -38,7 +38,7 @@
                         </div>
 
                         <div class="form-group">
-                            {!! Form::label('link', 'Tập phim', []) !!}
+                            {!! Form::label('episode', 'Tập phim', []) !!}
                             <select name="episode" class="form-control" id="episode">
                      
                             </select>

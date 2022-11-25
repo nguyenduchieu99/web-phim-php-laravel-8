@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Movie;
+use App\Models\Episode;
+use Carbon\Carbon;
+
 class EpisodeController extends Controller
 {
     /**
@@ -14,6 +17,13 @@ class EpisodeController extends Controller
     public function index()
     {
         //
+        $list_episode = Episode::with('movie')->OrderBy('movie_id','DESC')->get();
+
+        // return response()->json($list_episode);
+
+        return view('admincp.episode.index',compact('list_episode'));
+
+
     }
 
     /**
@@ -35,7 +45,15 @@ class EpisodeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $episode =  new Episode();
+        $episode->movie_id = $data['movie_id'];
+        $episode->link_phim = $data['link'];
+        $episode->episode = $data['episode'];
+        $episode->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
+        $episode->created_at = Carbon::now('Asia/Ho_Chi_Minh');
+        $episode->save();
+        return redirect()->back();
     }
 
     /**
