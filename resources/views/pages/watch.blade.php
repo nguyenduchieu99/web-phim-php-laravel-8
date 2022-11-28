@@ -25,9 +25,23 @@
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe> --}}
 
-                    @foreach ($movie->episode as $epi)
+                    {{-- @foreach ($movie->episode as $epi)
                         {!! $epi->link_phim !!}
-                    @endforeach
+                    @endforeach --}}
+
+                    <style>
+                        .ifram_phim iframe{
+                            width: 100%;
+                            height: 500px;
+                        }
+                    </style>
+
+                    <div class="ifram_phim">
+
+                        {!! $episode->link_phim !!}
+                    </div>
+                    {{-- Hiển thị tập phim --}}
+                   
 
                     {{-- <div class="button-watch">
                         <ul class="halim-social-plugin col-xs-4 hidden-xs">
@@ -111,8 +125,8 @@
                                   
                                     <ul class="halim-list-eps">
                                         @foreach ($movie->episode as $key => $sotap)
-                                        <a href="{{route('so-tap')}}"><li class="halim-episode"><span
-                                            class="halim-btn halim-btn-2 {{$key==0 ?'active' : ''}} halim-info-1-2 box-shadow"
+                                        <a href="{{url('xem-phim/'.$movie->slug.'/tap-'.$sotap->episode)}}"><li class="halim-episode"><span
+                                            class="halim-btn halim-btn-2 {{$tap_phim==$sotap->episode ?'active' : ''}} halim-info-1-2 box-shadow"
                                             data-post-id="37976" data-server="1" data-episode="2" data-position=""
                                             data-embed="0"
                                             data-title="Xem phim {{ $movie->title }}  - Tập {{$sotap->episode}} - {{ $movie->name_eng}} - Vietsub + Thuyết Minh"

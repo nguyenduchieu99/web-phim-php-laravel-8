@@ -128,10 +128,17 @@ class IndexController extends Controller
 
         $related = Movie::with('category','genre','country')->where('category_id',$movie->category->id)->orderBy(DB::raw('RAND()'))->whereNotIn('slug',[$slug])->get();
 
-        return view('pages.movie',compact('category','country','genre','movie','related','phimhot_sidebar','phimhot_trailer'));
+        $episode = Episode::with('movie')->where('movie_id',$movie->id)->orderBy('episode','DESC')->take(3)->get();
+
+        $episode_tapdau = Episode::with('movie')->where('movie_id',$movie->id)->orderBy('episode','ASC')->take(1)->first();
+
+        return view('pages.movie',compact('category','country','genre','movie','related','phimhot_sidebar','phimhot_trailer','episode','episode_tapdau'));
     }
 
-    public function watch($slug) {
+    public function watch($slug,$tap) {
+       
+        
+
         $category = Category::orderBy('position','ASC')->where('status',1)->get();
         $country = Country::orderBy('id','DESC')->where('status',1)->get();
         $genre = Genre::orderBy('id','DESC')->where('status',1)->get();
@@ -141,9 +148,20 @@ class IndexController extends Controller
 
         $movie = Movie::with('category','genre','country','movie_genre','episode')->where('slug',$slug)->where('status','1')->first();
 
+       
         // return response()->json($movie);
- 
-        return view('pages.watch',compact('category','country','genre','movie','phimhot_sidebar','phimhot_trailer'));
+        
+        if (isset($tap)) {
+            $tap_phim = $tap;
+            $tap_phim = substr($tap,4,1);
+            $episode = Episode::where('movie_id',$movie->id)->where('episode',$tap_phim)->first();
+        } else {
+            $tap_phim = 1;
+            $episode = Episode::where('movie_id',$movie->id)->where('episode',$tap_phim)->first();
+        }
+        
+        // dd($tap_phim);
+        return view('pages.watch',compact('episode','category','country','genre','movie','phimhot_sidebar','phimhot_trailer','tap_phim'));
     }
 
     public function episode() {

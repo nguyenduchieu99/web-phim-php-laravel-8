@@ -38,7 +38,7 @@
                                 @if ($movie->resolution != 5)
                                     <div class="bwa-content">
                                         <div class="loader"></div>
-                                        <a href="{{ route('watch',[$movie->slug]) }}" class="bwac-btn">
+                                        <a href="{{url('xem-phim/'.$movie->slug.'/tap-'.$episode_tapdau->episode)}}" class="bwac-btn">
                                             <i class="fa fa-play"></i>
                                         </a>
                                     </div>
@@ -100,6 +100,13 @@
                                     <li class="list-info-group-item"><span>Quốc gia</span> : <a
                                             href="{{ route('country', [$movie->country->slug]) }}"
                                             rel="tag">{{ $movie->country->title }}</a></li>
+
+                                    <li class="list-info-group-item"><span>Tập phim mới nhất</span> : 
+                                        @foreach ($episode as $key =>$epi)
+                                        <a href="{{url('xem-phim/'.$epi->movie->slug.'/tap-'.$epi->episode)}}"
+                                            rel="tag">Tập {{$epi->episode}}</a>
+                                        @endforeach
+                                    </li> 
                                 </ul>
                                 <div class="movie-trailer hidden"></div>
                             </div>

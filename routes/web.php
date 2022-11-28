@@ -29,7 +29,7 @@ Route::get('/quoc-gia/{slug}', [IndexController::class,'country'])->name('countr
 
 
 Route::get('/phim/{slug}', [IndexController::class,'movie'])->name('movie');
-Route::get('/xem-phim/{slug}', [IndexController::class,'watch'])->name('watch');
+Route::get('/xem-phim/{slug}/{tap}', [IndexController::class,'watch']);
 Route::get('/so-tap', [IndexController::class,'episode'])->name('so-tap');
 Route::get('/nam/{year}', [IndexController::class,'year']);
 Route::get('/tag/{tag}', [IndexController::class,'tag']);

@@ -44,7 +44,6 @@
                                     'class' => 'form-control',
                                     'placeholder' => '...........',
                                     isset($episode) ? 'readonly' : ''
-                                    // 'readonly'
                                 ]) !!}
                             </div>    
                         @else
